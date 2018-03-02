@@ -15,6 +15,7 @@ public class WumpusModel implements Model{
         symbols = (ArraySet<Symbol>)kb.symbols();
         this.kb = kb;
     }
+    public WumpusModel(){}
 
     @Override
     public void set(Symbol sym, boolean value) {
