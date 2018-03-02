@@ -84,4 +84,8 @@ public class ArraySet<E> extends AbstractSet<E> {
 		return elements.get(index);
 	}
 
+	public int indexOf(E element){
+		return this.elements.indexOf(element);
+	}
+
 }

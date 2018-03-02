@@ -23,5 +23,9 @@ public class Part1 {
         return false;
     }
 
+    boolean TT_Check_All(){
+
+    }
+
 
 }
