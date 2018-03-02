@@ -43,10 +43,10 @@ public class Part1 {
         }
 
         Symbol p = symbols.get(0);
-        List<Symbol> rest = Util.rest(symbols);
+        List<Symbol> rest = symbols.subList(1, symbols.size()-1);
 
-        return CheckAll(kb, alpha, rest, model.union(p, true))
-                && CheckAll(kb, alpha, rest, model.union(p, false));
+        return CheckAll(kb, alpha, rest, (new Model(model))
+                && CheckAll(kb, alpha, rest, model.retrUnion(p));
     }
 
 

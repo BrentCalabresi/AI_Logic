@@ -6,6 +6,7 @@
  */
 
 package pl.util;
+import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -26,6 +27,8 @@ public class ArraySet<E> extends AbstractSet<E> {
 		super();
 		elements = new ArrayList<E>();
 	}
+
+
 
 	/**
 	 * Construct and return a new ArraySet with the given
@@ -86,6 +89,10 @@ public class ArraySet<E> extends AbstractSet<E> {
 
 	public int indexOf(E element){
 		return this.elements.indexOf(element);
+	}
+
+	public ArraySet<E> duplicate() {
+
 	}
 
 }
