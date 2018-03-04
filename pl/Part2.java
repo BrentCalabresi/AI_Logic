@@ -8,9 +8,7 @@ import pl.cnf.Literal;
 import pl.core.*;
 import pl.cnf.Clause;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class Part2 {
 
@@ -44,6 +42,8 @@ public class Part2 {
                 return false;
             }
 
+            Object pureSymArr = getPureSymbol(clauses, model);
+
         }
         if (allTrue) return true;
 
@@ -51,7 +51,7 @@ public class Part2 {
 
     }
 
-    public static Literal getPureSymbol(Set<Clause> clauses, Collection<Symbol> symbols, Model model) {
+    public static Object[] getPureSymbol(Set<Clause> clauses, Model model) {
 
         HashSet<Clause> trimmedClauses = new HashSet<>();
         for (Clause c : clauses) {
@@ -60,17 +60,37 @@ public class Part2 {
             trimmedClauses.add(c);
         }
 
-        HashSet<Symbol> possiblePureSymbols = new HashSet<>();
+        LinkedHashMap<Symbol, Literal.Polarity> possiblePureSymbols = new LinkedHashMap<>();
         HashSet<Symbol> definitelyNotPureSymbols = new HashSet<>();
+
+
 
         for (Clause c : trimmedClauses) {
             for (Literal l : c) {
-                if (!definitelyNotPureSymbols.contains(l.getContent())) {
-                    possiblePureSymbols.add(l.getContent());
+                Symbol currContent = l.getContent();
+                Literal.Polarity currPolarity = l.getPolarity();
+
+                if (!definitelyNotPureSymbols.contains(currContent) && !possiblePureSymbols.containsKey(currContent)) {
+                    possiblePureSymbols.put(currContent, currPolarity);
+
                     continue;
+                }
+
+                if (possiblePureSymbols.containsKey(currContent) && possiblePureSymbols.get(currPolarity) != currPolarity) {
+                    possiblePureSymbols.remove(currContent);
+                    definitelyNotPureSymbols.add(currContent);
+
                 }
             }
         }
+
+        if (possiblePureSymbols.size() == 0) return null;
+        Object[] retrArr = new Object[2];
+        retrArr[0] = possiblePureSymbols.keySet().iterator().next();
+        retrArr[1] = possiblePureSymbols.get(retrArr[0]);
+
+        return retrArr;
+
     }
 }
 
