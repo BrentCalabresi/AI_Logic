@@ -85,10 +85,12 @@ public class Literal {
      * true by the Model, or if it is a negative Literals, its content must
      * be assigned false by the Model.
      */
-    public boolean isSatisfiedBy(Model model) {
+    public Boolean isSatisfiedBy(Model model) {
     	System.out.println("Literal.iSatisfiedBy: this=" + this);
     	model.dump();
     	System.out.println("  model says: " + model.get(content));
+    	Boolean modelContent = model.get(content);
+    	if (modelContent == null) return null;
     	if (polarity == Polarity.POSITIVE) {
     		return model.get(content);
     	} else {

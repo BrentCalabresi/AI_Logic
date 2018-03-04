@@ -1,18 +1,22 @@
-
 package pl;
-
 
 
 import pl.cnf.CNFConverter;
 import pl.cnf.Literal;
 import pl.core.*;
 import pl.cnf.Clause;
+import pl.examples.WumpusWorldKB;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Part2 {
 
+    public static boolean debug = true;
+
     public static void main(String[] args) {
+
+        DPLL_Satisfiable(new WumpusWorldKB());
 
     }
 
@@ -24,6 +28,7 @@ public class Part2 {
                 clauses.add(c);
             }
         }
+
 
         return DPLL(clauses, kb.symbols(), new GenModel());
 
@@ -42,12 +47,16 @@ public class Part2 {
                 return false;
             }
 
-            Object pureSymArr = getPureSymbol(clauses, model);
 
         }
         if (allTrue) return true;
 
 
+        Object[] pureSymArr = getPureSymbol(clauses, model);
+
+
+
+        return true;
 
     }
 
@@ -56,13 +65,11 @@ public class Part2 {
         HashSet<Clause> trimmedClauses = new HashSet<>();
         for (Clause c : clauses) {
             Boolean satisfied = c.isSatisfiedBy(model);
-            if (satisfied == null) continue;
-            trimmedClauses.add(c);
+            if (satisfied == null) trimmedClauses.add(c);
         }
 
         LinkedHashMap<Symbol, Literal.Polarity> possiblePureSymbols = new LinkedHashMap<>();
         HashSet<Symbol> definitelyNotPureSymbols = new HashSet<>();
-
 
 
         for (Clause c : trimmedClauses) {
@@ -76,7 +83,7 @@ public class Part2 {
                     continue;
                 }
 
-                if (possiblePureSymbols.containsKey(currContent) && possiblePureSymbols.get(currPolarity) != currPolarity) {
+                if (possiblePureSymbols.containsKey(currContent) && possiblePureSymbols.get(currContent) != currPolarity) {
                     possiblePureSymbols.remove(currContent);
                     definitelyNotPureSymbols.add(currContent);
 
@@ -92,5 +99,6 @@ public class Part2 {
         return retrArr;
 
     }
+
 }
 

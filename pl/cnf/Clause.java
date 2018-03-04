@@ -82,8 +82,7 @@ public class Clause extends ArraySet<Literal> {
 			Boolean satisfied = literal.isSatisfiedBy(model);
 			if (satisfied == null) {
 				oneIsNull = true;
-			}
-			if (literal.isSatisfiedBy(model)) {
+			} else if (satisfied) {
 				return true;
 			}
 		}
