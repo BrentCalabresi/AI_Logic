@@ -1,10 +1,7 @@
 package pl;
 
 import pl.cnf.Literal;
-import pl.core.KB;
-import pl.core.Model;
-import pl.core.Sentence;
-import pl.core.Symbol;
+import pl.core.*;
 import pl.examples.WumpusWorldKB;
 
 import java.util.ArrayList;
@@ -21,7 +18,9 @@ public class Part1 {
         Symbol p12 = kb1.p12;
 
         Literal l = new Literal(p12);
-        System.out.println(Entails(kb1,p12));
+        Negation n  = new Negation(p12);
+
+        System.out.println("Does the KB entail the proposition: "+Entails(kb1,n));
     }
 
 
@@ -38,16 +37,32 @@ public class Part1 {
             if (model.satisfies(kb)) {
                 return model.satisfies(alpha);
             } else {
-                return true;
+                return false;//?????
             }
         }
         Symbol p = symbols.get(0);
-        List<Symbol> rest = symbols.subList(1, symbols.size()-1);
+        List<Symbol> rest = rest(symbols,1);
+        System.out.println("REST: " +rest);
 
-        WumpusModel newModel = new WumpusModel();
 
-        return CheckAll(kb, alpha, rest, newModel.union(p,true))
-                && CheckAll(kb, alpha, rest, newModel.union(p,false));
+        return CheckAll(kb, alpha, rest, model.union(p,true))
+                && CheckAll(kb, alpha, rest, model.union(p,false));
 
+    }
+
+    /**
+     *
+     * helper function to return sublists.
+     * Necessary for some cases of lists
+     */
+    public static List rest(List l,int start){
+        if (l.size() ==0 || l.size() ==1){
+            System.out.println("empty");
+            l.remove(0);
+            return new ArrayList();
+        }
+
+
+        return l.subList(start,l.size());
     }
 }

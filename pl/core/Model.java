@@ -33,4 +33,6 @@ public interface Model {
 	 */
 	public void dump();
 
+	public Model union(Symbol s, boolean b);
+
 }
