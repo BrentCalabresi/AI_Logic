@@ -1,15 +1,13 @@
 package pl;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import pl.cnf.CNFConverter;
-import pl.core.KB;
+import pl.cnf.Literal;
+import pl.core.*;
 import pl.cnf.Clause;
-import pl.core.Model;
-import pl.core.Sentence;
-import pl.core.SymbolTable;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class Part2 {
@@ -18,7 +16,7 @@ public class Part2 {
 
     }
 
-    public static void DPLL_Satisfiable(KB kb) {
+    public static boolean DPLL_Satisfiable(KB kb) {
         HashSet<Clause> clauses = new HashSet<>();
 
         for (Sentence s : kb.sentences()) {
@@ -27,11 +25,49 @@ public class Part2 {
             }
         }
 
-        return DPLL(clauses, kb.symbols(), new WumpusModel());
+        return DPLL(clauses, kb.symbols(), new GenModel());
 
     }
 
-    public static boolean DPLL(Set<Clause> clauses, Collection<Clause> symbols, Model model) {
+    public static boolean DPLL(Set<Clause> clauses, Collection<Symbol> symbols, Model model) {
 
+        boolean allTrue = true;
+        for (Clause c : clauses) {
+            Boolean satisfied = c.isSatisfiedBy(model);
+            if (satisfied == null) {
+                allTrue = false;
+                break;
+            }
+            if (!satisfied) {
+                return false;
+            }
+
+        }
+        if (allTrue) return true;
+
+
+
+    }
+
+    public static Literal getPureSymbol(Set<Clause> clauses, Collection<Symbol> symbols, Model model) {
+
+        HashSet<Clause> trimmedClauses = new HashSet<>();
+        for (Clause c : clauses) {
+            Boolean satisfied = c.isSatisfiedBy(model);
+            if (satisfied == null) continue;
+            trimmedClauses.add(c);
+        }
+
+        HashSet<Symbol> possiblePureSymbols = new HashSet<>();
+        HashSet<Symbol> definitelyNotPureSymbols = new HashSet<>();
+
+        for (Clause c : trimmedClauses) {
+            for (Literal l : c) {
+                if (!definitelyNotPureSymbols.contains(l.getContent())) {
+                    possiblePureSymbols.add(l.getContent());
+                    continue;
+                }
+            }
+        }
     }
 }

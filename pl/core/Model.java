@@ -16,7 +16,7 @@ public interface Model {
 	 * Returns the boolean value associated with the given PropositionalSymbol
 	 * in this Model.
 	 */
-	public boolean get(Symbol sym);
+	public Boolean get(Symbol sym);
 	
 	/**
 	 * Return true if this Model satisfies (makes true) the given KB.

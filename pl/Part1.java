@@ -27,7 +27,7 @@ public class Part1 {
     public static boolean Entails(KB kb, Sentence alpha) {
         List<Symbol> symbols = new ArrayList<>(kb.symbols());
 
-        return CheckAll(kb, alpha, symbols, new WumpusModel());
+        return CheckAll(kb, alpha, symbols, new GenModel());
     }
 
 

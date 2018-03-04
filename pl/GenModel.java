@@ -4,29 +4,27 @@ import pl.core.KB;
 import pl.core.Model;
 import pl.core.Sentence;
 import pl.core.Symbol;
-import pl.cnf.ArraySet;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
-public class WumpusModel implements Model{
+public class GenModel implements Model{
     private HashMap<Symbol,Boolean> assertions = new HashMap<Symbol, Boolean>();//sentences about the world
     KB kb;
 
     //TODO
-    public WumpusModel(KB kb){//possible world of wumpus world
+    public GenModel(KB kb){//possible world of wumpus world
         System.out.println("this constructor is unfinished");
 //        this.assertions =
 //        this.symbols = (ArraySet<Symbol>)kb.symbols();
 //        this.kb = kb;
     }
 
-    public WumpusModel(WumpusModel w) {
+    public GenModel(GenModel w) {
         this.assertions = w.getAssertions();
         kb = w.getKb();
     }
 
-    public WumpusModel(){}
+    public GenModel(){}
 
     @Override
     public void set(Symbol sym, boolean value) {
@@ -52,8 +50,11 @@ public class WumpusModel implements Model{
     }
 
     @Override
-    public boolean get(Symbol sym) {
-        return assertions.get(sym);
+    public Boolean get(Symbol sym) {
+        if (assertions.containsKey(sym)) {
+            return assertions.get(sym);
+        }
+        else return null;
     }
 
     public KB getKb() {
@@ -88,8 +89,8 @@ public class WumpusModel implements Model{
     }
 
     //TODO
-    public WumpusModel duplicate(){
-        WumpusModel newModel = new WumpusModel();
+    public GenModel duplicate(){
+        GenModel newModel = new GenModel();
         newModel.assertions = new HashMap<>(this.assertions);
 
         return newModel;
@@ -97,7 +98,7 @@ public class WumpusModel implements Model{
 
     //TODO
     public Model union(Symbol symbol, boolean b) {
-        WumpusModel m = new WumpusModel(this);//this.duplicate();
+        GenModel m = new GenModel(this);//this.duplicate();
         m.addSymbol(symbol,b);
 
         //m.dump();
