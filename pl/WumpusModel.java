@@ -71,7 +71,7 @@ public class WumpusModel implements Model{
             if (!s.isSatisfiedBy(this))
                 return false;
         }
-        return false;
+        return true;
     }
 
     @Override
