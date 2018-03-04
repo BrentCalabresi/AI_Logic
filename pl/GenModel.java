@@ -12,7 +12,7 @@ public class GenModel implements Model{
     KB kb;
 
     //TODO
-    public GenModel(KB kb){//possible world of wumpus world
+    public GenModel(KB kb){
         System.out.println("this constructor is unfinished");
 //        this.assertions =
 //        this.symbols = (ArraySet<Symbol>)kb.symbols();
@@ -72,7 +72,7 @@ public class GenModel implements Model{
             if (!s.isSatisfiedBy(this))
                 return false;
         }
-        return false;
+        return true;
     }
 
     @Override

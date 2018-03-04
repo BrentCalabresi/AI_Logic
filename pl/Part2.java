@@ -1,6 +1,8 @@
+<<<<<<< HEAD
 package pl;
 
 import com.sun.org.apache.xpath.internal.operations.Bool;
+import pl.GenModel;
 import pl.cnf.CNFConverter;
 import pl.cnf.Literal;
 import pl.core.*;
@@ -71,3 +73,4 @@ public class Part2 {
         }
     }
 }
+

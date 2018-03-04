@@ -20,7 +20,7 @@ public class Part1 {
         Literal l = new Literal(p12);
         Negation n  = new Negation(p12);
 
-        System.out.println("Does the KB entail the proposition: "+Entails(kb1,n));
+        System.out.println("Does the KB entail the proposition \"There is a pit in 1,2\": "+Entails(kb1,p12));
     }
 
 
@@ -34,10 +34,12 @@ public class Part1 {
     public static boolean CheckAll(KB kb, Sentence alpha, List<Symbol> symbols, Model model) {
 
         if (symbols.isEmpty()) {
+            System.out.println(model.satisfies(kb));
             if (model.satisfies(kb)) {
+                System.out.println("DONE------------------------------------------------------");
                 return model.satisfies(alpha);
             } else {
-                return false;//?????
+                return true;
             }
         }
         Symbol p = symbols.get(0);
