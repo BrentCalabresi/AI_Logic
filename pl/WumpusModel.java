@@ -4,14 +4,12 @@ import pl.core.KB;
 import pl.core.Model;
 import pl.core.Sentence;
 import pl.core.Symbol;
-import pl.util.ArraySet;
-
-import java.lang.reflect.Array;
+import pl.cnf.ArraySet;
 
 public class WumpusModel implements Model{
-    private ArraySet<Symbol> symbols = new ArraySet<>();
-    private Boolean[] booleans = new Boolean[symbols.size()];//indexes correspond to those in symbols set
-    private KB kb;
+    ArraySet<Symbol> symbols = new ArraySet<>();
+    Boolean[] booleans = new Boolean[symbols.size()];//indexes correspond to those in symbols set
+    KB kb;
 
     public WumpusModel(KB kb){//possible world of wumpus world
         symbols = (ArraySet<Symbol>)kb.symbols();
@@ -71,6 +69,18 @@ public class WumpusModel implements Model{
         System.out.println("Symbols: ");
         for (Symbol s: symbols)
             System.out.println(s+ " "+booleans[symbols.indexOf(s)]);
+    }
+
+
+    //TODO
+    public Model union(Symbol symbol, boolean b) {
+        WumpusModel m = new WumpusModel(this);
+        m.symbols.add(symbol);
+        m.booleans[m.symbols.indexOf(symbol)]=b;
+
+        //m.assignments.putAll(this.assignments);
+        //m.assignments.put(symbol, b);
+        return m;
     }
 
 

@@ -7,11 +7,12 @@ import pl.core.Negation;
 import pl.core.Symbol;
 
 public class WumpusWorldKB extends KB {
-	
+	public Symbol p12;
+
 	public WumpusWorldKB() {
 		super();
 		Symbol p11 = intern("P1,1");
-		Symbol p12 = intern("P1,2");
+		p12 = intern("P1,2");
 		Symbol p21 = intern("P2,1");
 		Symbol p22 = intern("P2,2");
 		Symbol p31 = intern("P3,1");

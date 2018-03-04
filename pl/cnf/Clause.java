@@ -6,8 +6,10 @@
  */
 
 package pl.cnf;
-import pl.core.*;
-import pl.util.ArraySet;
+import pl.core.BinaryCompoundSentence;
+import pl.core.BinaryConnective;
+import pl.core.Model;
+import pl.core.Sentence;
 
 /**
  * A clause is a disjunction of literals.
@@ -70,17 +72,17 @@ public class Clause extends ArraySet<Literal> {
 		return buf.toString();
 	}
 
-    /**
-     * Return true if this Clause is satisfied by the given Model.
-     * That is, if each of its Literals is satisfied by the Model.
-     */
+	/**
+	 * Return true if this Clause is satisfied by the given Model.
+	 * That is, if one of its Literals is satisfied by the Model.
+	 */
 	public boolean isSatisfiedBy(Model model) {
 		for (Literal literal : this) {
-			if (!literal.isSatisfiedBy(model)) {
-				return false;
+			if (literal.isSatisfiedBy(model)) {
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 
 }

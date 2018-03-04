@@ -5,8 +5,7 @@
  * Time-stamp: <Thu Mar 15 12:20:55 EDT 2012 ferguson>
  */
 
-package pl.util;
-import java.lang.reflect.Array;
+package pl.cnf;
 import java.util.*;
 
 /**
@@ -92,7 +91,7 @@ public class ArraySet<E> extends AbstractSet<E> {
 	}
 
 	public ArraySet<E> duplicate() {
-
+		return new ArraySet<>(this);
 	}
 
 }

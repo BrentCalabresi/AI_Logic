@@ -1,9 +1,13 @@
 package pl;
 
-import pl.core.*;
+import pl.cnf.Literal;
+import pl.core.KB;
+import pl.core.Model;
+import pl.core.Sentence;
+import pl.core.Symbol;
+import pl.examples.WumpusWorldKB;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -13,26 +17,22 @@ import java.util.List;
 public class Part1 {
 
     public static void main(String[] args) {
+        WumpusWorldKB kb1 = new WumpusWorldKB();
+        Symbol p12 = kb1.p12;
 
-    }
-
-    boolean enumerateTruthTable(KB kb, Sentence alpha){
-
-        if (kb.symbols().isEmpty()){
-            if ()
-        }
-
-        return false;
+        Literal l = new Literal(p12);
+        System.out.println(Entails(kb1,p12));
     }
 
 
-    public boolean Entails(KB kb, Sentence alpha) {
-        List<Symbol> symbols = (List)kb.symbols();
+    public static boolean Entails(KB kb, Sentence alpha) {
+        List<Symbol> symbols = new ArrayList<>(kb.symbols());
 
         return CheckAll(kb, alpha, symbols, new WumpusModel());
     }
 
-    public boolean CheckAll(KB kb, Sentence alpha, List<Symbol> symbols, Model model) {
+
+    public static boolean CheckAll(KB kb, Sentence alpha, List<Symbol> symbols, Model model) {
 
         if (symbols.isEmpty()) {
             if (model.satisfies(kb)) {
@@ -41,13 +41,13 @@ public class Part1 {
                 return true;
             }
         }
-
         Symbol p = symbols.get(0);
         List<Symbol> rest = symbols.subList(1, symbols.size()-1);
 
-        return CheckAll(kb, alpha, rest, (new Model(model))
-                && CheckAll(kb, alpha, rest, model.retrUnion(p));
+        WumpusModel newModel = new WumpusModel();
+
+        return CheckAll(kb, alpha, rest, newModel.union(p,true))
+                && CheckAll(kb, alpha, rest, newModel.union(p,false));
+
     }
-
-
 }
