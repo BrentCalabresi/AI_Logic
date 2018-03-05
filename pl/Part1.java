@@ -18,6 +18,7 @@ public class Part1 {
     public static void main(String[] args) {
         WumpusWorldKB kb1 = new WumpusWorldKB();
         Symbol p12 = kb1.p12;
+        Negation notPit = new Negation(kb1.p12);
 
         ModusPonensKB MPKB = new ModusPonensKB();
         Symbol q = MPKB.q;
@@ -27,11 +28,13 @@ public class Part1 {
         Symbol mythical = unicorns.mythical;
         Symbol magical = unicorns.magical;
         Symbol horned = unicorns.horned;
-        Negation n = new Negation(horned);
+        Negation notMythical = new Negation(unicorns.mythical);
+        Negation notMagical = new Negation(unicorns.magical);
+        Negation notHorned = new Negation(unicorns.horned);
 
 
-        System.out.println("Does the KB entail the proposition \"There is a pit in 1,2\": "+Entails(kb1,p12));
-        System.out.println("Does the KB entail the proposition \"If P && Q, then P implies Q\": "+Entails(MPKB,q));
+        System.out.println("Does the KB entail the proposition \"There is a pit in 1,2\": "+Entails(kb1, p12));
+        System.out.println("Does the KB entail the proposition \"If P && Q, then P implies Q\": "+Entails(MPKB, q));
         System.out.println("Does the KB entail the proposition \"mythical?\": "+Entails(unicorns,mythical));
         System.out.println("Does the KB entail the proposition \"magical?\": "+Entails(unicorns,magical));
         System.out.println("Does the KB entail the proposition \"horned?\": "+Entails(unicorns,horned));

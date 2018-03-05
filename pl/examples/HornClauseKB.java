@@ -17,16 +17,11 @@ public class HornClauseKB extends KB{
             immortal = intern("Immortal");
             mammal = intern("Mammal");
 
-            add(mythical);
-            add(magical);
-            add(horned);
-            add(immortal);
-            add(mammal);
 
             add(new Implication(mythical, immortal));
             add(new Implication(new Negation(mythical),mammal));
             add(new Implication(horned,magical));
-            add(new Implication(new Conjunction(immortal,mammal),horned));
+            add(new Implication(new Disjunction(immortal,mammal),horned));
         }
 
 }

@@ -21,7 +21,7 @@ public class WumpusWorldKB extends KB {
 
 		add(new Negation(p11));
 		add(new Biconditional(b11, new Disjunction(p12, p21)));
-		add(new Biconditional(b21, new Disjunction(p12, new Disjunction(p22, p31))));
+		add(new Biconditional(b21, new Disjunction(p11, new Disjunction(p22, p31))));
 		add(new Negation(b11));
 		add(b21);
 	}
