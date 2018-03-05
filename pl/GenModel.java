@@ -69,8 +69,15 @@ public class GenModel implements Model{
     @Override
     public boolean satisfies(KB kb) {
         for (Sentence s : kb.sentences()){
-            if (!s.isSatisfiedBy(this))
+            //System.out.println(s);
+//            System.out.println(this.get((Symbol) s));
+            //this.dump();
+            //System.out.println(s);
+            if (!s.isSatisfiedBy(this)){
+                //System.out.println("not satisfying "+s);
                 return false;
+            }
+
         }
         return true;
     }
@@ -82,6 +89,7 @@ public class GenModel implements Model{
 
     @Override
     public void dump() {
+        System.out.println("Hashtable of assertions");
         for (Symbol s: assertions.keySet()){
             System.out.print("(Symbol: "+s+" boolean: "+assertions.get(s)+")  ");
         }
@@ -97,7 +105,7 @@ public class GenModel implements Model{
     }
 
     //TODO
-    public Model union(Symbol symbol, boolean b) {
+    public GenModel union(Symbol symbol, boolean b) {
         GenModel m = new GenModel(this);//this.duplicate();
         m.addSymbol(symbol,b);
 

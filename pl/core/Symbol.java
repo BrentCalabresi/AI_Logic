@@ -18,7 +18,17 @@ public class Symbol implements Sentence {
 	 * That is, if it is assigned true by the model.
 	 */
 	public boolean isSatisfiedBy(Model model) {
-		return model.get(this);
+		try{
+			//System.out.println("model ");
+			//model.dump();
+			//System.out.println(this);
+			return model.get(this);
+		}catch (NullPointerException e){
+			System.out.println("NULL when printing isSatisfiedBy");
+			System.exit(1);
+		}
+		return true;
+
 	}
 	
 	//
