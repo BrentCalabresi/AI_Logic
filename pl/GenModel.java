@@ -23,6 +23,7 @@ public class GenModel implements Model{
         for (Symbol s : w.getAssertions().keySet())
             this.assertions.put(s,w.getAssertions().get(s));
 
+
         kb = w.getKb();
     }
 
@@ -108,7 +109,6 @@ public class GenModel implements Model{
         return newModel;
     }
 
-    @Deprecated
     public GenModel union(Symbol symbol, boolean b) {
         GenModel m = new GenModel(this);//this.duplicate();
         m.addSymbol(symbol,b);
