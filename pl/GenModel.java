@@ -11,12 +11,9 @@ public class GenModel implements Model{
     private HashMap<Symbol,Boolean> assertions = new HashMap<Symbol, Boolean>();//sentences about the world
     KB kb;
 
-    //TODO
+    @Deprecated
     public GenModel(KB kb){
         System.out.println("this constructor is unfinished");
-//        this.assertions =
-//        this.symbols = (ArraySet<Symbol>)kb.symbols();
-//        this.kb = kb;
     }
 
     public GenModel(GenModel w) {
@@ -71,14 +68,7 @@ public class GenModel implements Model{
     @Override
     public boolean satisfies(KB kb) {
         for (Sentence s : kb.sentences()){
-            //System.out.println(s);
-//            System.out.println(this.get((Symbol) s));
-            //this.dump();
-            //System.out.println(s);
             if (!s.isSatisfiedBy(this)){
-                //System.out.println("Model: ");
-                //this.dump();
-                //System.out.println("not satisfying "+s);
                 return false;
             }
 
@@ -93,7 +83,6 @@ public class GenModel implements Model{
 
     @Override
     public void dump() {
-        //System.out.println("Hashtable of assertions");
         for (Symbol s: assertions.keySet()){
             System.out.print("(Sentence: "+s+" is "+assertions.get(s)+")  ");
         }
@@ -108,12 +97,11 @@ public class GenModel implements Model{
         return newModel;
     }
 
-    @Deprecated
+
     public GenModel union(Symbol symbol, boolean b) {
         GenModel m = new GenModel(this);//this.duplicate();
         m.addSymbol(symbol,b);
         System.out.println("adding: "+symbol);
-        //m.dump();
         return m;
     }
 
