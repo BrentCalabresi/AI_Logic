@@ -1,9 +1,12 @@
 package pl;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import pl.cnf.CNFConverter;
 import pl.cnf.Literal;
 import pl.core.*;
 import pl.cnf.Clause;
+import pl.examples.HornClauseKB;
+import pl.examples.LiarsTruthTellersKB;
 import pl.examples.ModusPonensKB;
 import pl.examples.WumpusWorldKB;
 
@@ -14,11 +17,44 @@ public class Part2 {
 
 
     public static void main(String[] args) {
+        ModusPonensKB mkb = new ModusPonensKB();
+        WumpusWorldKB wkb = new WumpusWorldKB();
+        HornClauseKB hkb = new HornClauseKB();
 
-        boolean sat = DPLL_Satisfiable(new ModusPonensKB());
+        System.out.println("----- Part 2 -----");
+        boolean modusSat = DPLL_Satisfiable(mkb);
+        boolean wumpusSat = DPLL_Satisfiable(wkb);
+        boolean hornSat = DPLL_Satisfiable(hkb);
+        boolean liarsSat = DPLL_Satisfiable(new LiarsTruthTellersKB());
 
-        if (sat) System.out.println("It's satisfiable");
-        else System.out.println("It's not satisfiable");
+        System.out.print("Is modus ponens satisfiable? ");
+        printBool(modusSat);
+        System.out.print("Is modus ponens with ~Q added satisfiable? ");
+        mkb.addNotQ();
+        printBool(DPLL_Satisfiable(mkb));
+        System.out.println("Since modus ponens is satisfiable without ~Q and not satisfiable with it, Q must be true\n");
+
+        System.out.print("Is the given wumpus world KB satisfiable? ");
+        printBool(wumpusSat);
+        System.out.print("Is the given wumpus world with P1,2 added satisfiable? ");
+        wkb.addP12();
+        boolean modusSat2 = DPLL_Satisfiable(wkb);
+        printBool(modusSat2);
+        System.out.println("Since wumpus is satisfiable without P1,2 and not satisfiable with it, P1,2 must be false\n");
+
+        System.out.print("Is the horn clause problem satisfiable? ");
+        printBool(hornSat);
+        System.out.print("Is the horn clause problem");
+
+        System.out.print("Is the liars and truth-tellers problem satisfiable? ");
+        printBool(liarsSat);
+
+
+    }
+
+    public static void printBool(boolean sat) {
+        if (sat) System.out.println("Yes");
+        else System.out.println("No");
     }
 
     public static boolean DPLL_Satisfiable(KB kb) {
@@ -29,7 +65,7 @@ public class Part2 {
                 clauses.add(c);
             }
         }
-        System.out.println(clauses);
+        //System.out.println(clauses);
 
 
         return DPLL(clauses, kb.symbols(), new GenModel());
@@ -39,21 +75,21 @@ public class Part2 {
     public static boolean DPLL(Set<Clause> clauses, Collection<Symbol> symbols, GenModel model) {
 
 
-        System.out.println("\n\n-- NEW RECURSION");
-        System.out.println("Clauses: " + clauses);
-        System.out.println("-- Model contents: ");
-        model.dump();
-        System.out.println("-- END MODEL CONTENTS");
+//        System.out.println("\n\n-- NEW RECURSION");
+//        System.out.println("Clauses: " + clauses);
+//        System.out.println("-- Model contents: ");
+//        model.dump();
+//        System.out.println("-- END MODEL CONTENTS");
         boolean allTrue = true;
         for (Clause c : clauses) {
-            System.out.println("-- checking clause: " + c);
+            //System.out.println("-- checking clause: " + c);
             Boolean satisfied = c.isSatisfiedBy(model);
             if (satisfied == null) {
                 allTrue = false;
                 break;
             }
             if (!satisfied) {
-                System.out.println("-- wasn't satisfied by " + c);
+                //System.out.println("-- wasn't satisfied by " + c);
                 return false;
             }
 
@@ -61,14 +97,14 @@ public class Part2 {
         }
         if (allTrue) return true;
 
-        System.out.println("-- FINISHED INITIAL CHECK\n");
+        //System.out.println("-- FINISHED INITIAL CHECK\n");
 
 
         Object[] pureSymArr = getPureSymbol(clauses, model);
         if (pureSymArr != null) {
-            System.out.print("-- Found pure symbol: ");
-            System.out.print(pureSymArr[0] + ", ");
-            System.out.println(pureSymArr[1]);
+//            System.out.print("-- Found pure symbol: ");
+//            System.out.print(pureSymArr[0] + ", ");
+//            System.out.println(pureSymArr[1]);
             DPLL_HeuristicRun(clauses, symbols, model, (Symbol)pureSymArr[0], (Literal.Polarity)pureSymArr[1]);
         }
 
@@ -83,7 +119,7 @@ public class Part2 {
         Collection<Symbol> rest = cloneCollection(symbols);
         rest.remove(firstSym);
 
-        System.out.println("Setting symbol " + firstSym + " with a main recursion jump");
+        //System.out.println("Setting symbol " + firstSym + " with a main recursion jump");
 
 
         return DPLL(clauses, rest, model.union(firstSym, true)) || DPLL(clauses, rest, model.union(firstSym, false));
@@ -157,7 +193,7 @@ public class Part2 {
 
 
 
-        System.out.println("-- possiblePureSymbols: " + possiblePureSymbols);
+        //System.out.println("-- possiblePureSymbols: " + possiblePureSymbols);
 
         // return an array of the first pure symbol and that symbol's polarity
         Object[] retrArr = new Object[2];

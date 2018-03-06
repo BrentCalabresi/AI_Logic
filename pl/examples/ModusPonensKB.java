@@ -16,4 +16,8 @@ public class ModusPonensKB extends KB {
 		new ModusPonensKB().dump();
 	}
 
+	public void addNotQ() {
+		add(new Negation(q));
+	}
+
 }

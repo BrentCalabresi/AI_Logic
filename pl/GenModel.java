@@ -40,7 +40,7 @@ public class GenModel implements Model{
 
     public void addSymbol(Symbol s, boolean b){
         if (assertions.containsValue(s)){
-            System.out.println("Object is already in model");
+            //System.out.println("Object is already in model");
         }
         else{
             assertions.put(s,b);
@@ -113,7 +113,7 @@ public class GenModel implements Model{
     public GenModel union(Symbol symbol, boolean b) {
         GenModel m = new GenModel(this);//this.duplicate();
         m.addSymbol(symbol,b);
-        System.out.println("adding: "+symbol);
+        //System.out.println("adding: "+symbol);
         //m.dump();
         return m;
     }
