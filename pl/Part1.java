@@ -4,9 +4,7 @@ import pl.core.KB;
 import pl.core.Negation;
 import pl.core.Sentence;
 import pl.core.Symbol;
-import pl.examples.HornClauseKB;
-import pl.examples.ModusPonensKB;
-import pl.examples.WumpusWorldKB;
+import pl.examples.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,13 +32,20 @@ public class Part1 {
         Negation notMagical = new Negation(unicorns.magical);
         Negation notHorned = new Negation(unicorns.horned);
 
+        LiarsTruthTellersKB liars = new LiarsTruthTellersKB();
+        Symbol amy = liars.Amy;
+        Symbol bob = liars.Bob;
+        Symbol cal = liars.Cal;
 
+        System.out.println("----- Part 1 -----");
         System.out.println("Does the KB entail the proposition \"There is a pit in 1,2\": "+Entails(kb1, p12));
         System.out.println("Does the KB entail the proposition \"If P && Q, then P implies Q\": "+Entails(MPKB, q));
         System.out.println("Does the KB entail the proposition \"mythical?\": "+Entails(unicorns,mythical));
         System.out.println("Does the KB entail the proposition \"magical?\": "+Entails(unicorns,magical));
         System.out.println("Does the KB entail the proposition \"horned?\": "+Entails(unicorns,horned));
-
+        System.out.println("Does the KB entail the proposition \"Amy?\": "+Entails(liars,amy));
+        System.out.println("Does the KB entail the proposition \"Bob?\": "+Entails(liars,bob));
+        System.out.println("Does the KB entail the proposition \"Cal?\": "+Entails(liars,cal));
     }
 
 
