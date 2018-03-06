@@ -20,7 +20,9 @@ public class GenModel implements Model{
     }
 
     public GenModel(GenModel w) {
-        this.assertions = w.getAssertions();
+        for (Symbol s : w.getAssertions().keySet())
+            this.assertions.put(s,w.getAssertions().get(s));
+
         kb = w.getKb();
     }
 
@@ -74,6 +76,8 @@ public class GenModel implements Model{
             //this.dump();
             //System.out.println(s);
             if (!s.isSatisfiedBy(this)){
+                //System.out.println("Model: ");
+                //this.dump();
                 //System.out.println("not satisfying "+s);
                 return false;
             }
@@ -89,14 +93,14 @@ public class GenModel implements Model{
 
     @Override
     public void dump() {
-        System.out.println("Hashtable of assertions");
+        //System.out.println("Hashtable of assertions");
         for (Symbol s: assertions.keySet()){
-            System.out.print("(Symbol: "+s+" boolean: "+assertions.get(s)+")  ");
+            System.out.print("(Sentence: "+s+" is "+assertions.get(s)+")  ");
         }
         System.out.println();
     }
 
-    //TODO
+    @Deprecated
     public GenModel duplicate(){
         GenModel newModel = new GenModel();
         newModel.assertions = new HashMap<>(this.assertions);
@@ -104,11 +108,11 @@ public class GenModel implements Model{
         return newModel;
     }
 
-    //TODO
+    @Deprecated
     public GenModel union(Symbol symbol, boolean b) {
         GenModel m = new GenModel(this);//this.duplicate();
         m.addSymbol(symbol,b);
-
+        System.out.println("adding: "+symbol);
         //m.dump();
         return m;
     }

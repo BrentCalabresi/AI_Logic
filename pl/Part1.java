@@ -1,7 +1,9 @@
 package pl;
 
-import pl.cnf.Literal;
-import pl.core.*;
+import pl.core.KB;
+import pl.core.Negation;
+import pl.core.Sentence;
+import pl.core.Symbol;
 import pl.examples.HornClauseKB;
 import pl.examples.ModusPonensKB;
 import pl.examples.WumpusWorldKB;
@@ -55,7 +57,7 @@ public class Part1 {
             //System.out.println("does the current model satisfy the knowledge base?: "+model.satisfies(kb));
             //model.dump();
             if (model.satisfies(kb)) {
-                //System.out.println("model satisfies kb, returning model satisfies apha: "+model.satisfies(alpha));
+               // System.out.println("model satisfies kb, returning model satisfies apha: "+model.satisfies(alpha));
                 return model.satisfies(alpha);
             } else {
                 //System.out.println("no more cases... return true");
@@ -63,7 +65,8 @@ public class Part1 {
             }
         }
         Symbol p = symbols.get(0);
-        List<Symbol> rest = rest(symbols,1);
+        //List<Symbol> rest = rest(symbols,1);
+        List<Symbol> rest = symbols.subList(1,symbols.size());
         //System.out.println("REST: " +rest);
 
 
@@ -84,13 +87,13 @@ public class Part1 {
      * helper function to return sublists.
      * Necessary for some cases of lists
      */
+    @Deprecated
     public static List rest(List l,int start){
         if (l.size() ==0 || l.size() ==1){
             //System.out.println("empty");
             l.remove(0);
             return new ArrayList();
         }
-
 
         return l.subList(start,l.size());
     }
