@@ -24,6 +24,7 @@ public class GenModel implements Model{
             this.assertions.put(s,w.getAssertions().get(s));
 
 
+
         kb = w.getKb();
     }
 
