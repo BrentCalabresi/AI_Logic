@@ -50,6 +50,10 @@ public class KB {
 	public void add(Sentence s) {
 		sentences.add(s);
 	}
+
+	public void remove(Sentence s) {
+		sentences.remove(s);
+	}
 	
 	/**
 	 * Print the contents of this KB to System.out.
@@ -58,6 +62,11 @@ public class KB {
 		for (Sentence s : sentences()) {
 			System.out.println(s);
 		}
+	}
+
+	public void addSymbol(Symbol s, boolean polarity) {
+		if (polarity) add(s);
+		else add(new Negation(s));
 	}
 
 }

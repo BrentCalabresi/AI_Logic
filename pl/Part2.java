@@ -27,6 +27,7 @@ public class Part2 {
         boolean hornSat = DPLL_Satisfiable(hkb);
         boolean liarsSat = DPLL_Satisfiable(new LiarsTruthTellersKB());
 
+        System.out.println("MODUS PONENS:");
         System.out.print("Is modus ponens satisfiable? ");
         printBool(modusSat);
         System.out.print("Is modus ponens with ~Q added satisfiable? ");
@@ -34,6 +35,7 @@ public class Part2 {
         printBool(DPLL_Satisfiable(mkb));
         System.out.println("Since modus ponens is satisfiable without ~Q and not satisfiable with it, Q must be true\n");
 
+        System.out.println("WUMPUS WORLD:");
         System.out.print("Is the given wumpus world KB satisfiable? ");
         printBool(wumpusSat);
         System.out.print("Is the given wumpus world with P1,2 added satisfiable? ");
@@ -42,12 +44,53 @@ public class Part2 {
         printBool(modusSat2);
         System.out.println("Since wumpus is satisfiable without P1,2 and not satisfiable with it, P1,2 must be false\n");
 
+        System.out.println("HORN CLAUSES:");
         System.out.print("Is the horn clause problem satisfiable? ");
         printBool(hornSat);
-        System.out.print("Is the horn clause problem");
 
+        System.out.print("\nIs the horn clause problem with mythical added satisfiable? ");
+        hkb.addSymbol(hkb.mythical, true);
+        printBool(DPLL_Satisfiable(hkb));
+        System.out.print("Is the horn clause problem with ~mythical added satisfiable? ");
+        HornClauseKB hkb2 = new HornClauseKB();
+        hkb2.addSymbol(hkb2.mythical, false);
+        printBool(DPLL_Satisfiable(hkb2));
+        System.out.println("Since it's satisfiable for both mythical and ~mythical, we can't prove whether the unicorn is mythical\n");
+
+        System.out.print("Is the horn clause problem with ~magical added satisfiable? ");
+        HornClauseKB hkb3 = new HornClauseKB();
+        hkb3.addSymbol(hkb3.magical, false);
+        printBool(DPLL_Satisfiable(hkb3));
+        System.out.println("Since the horn clause problem isn't satisfiable with ~magical added, but is without it, we conclude that the unicorn is magical\n");
+
+        System.out.print("Is the horn clause problem with ~horned added satisfiable? ");
+        HornClauseKB hkb4 = new HornClauseKB();
+        hkb4.addSymbol(hkb4.horned, false);
+        printBool(DPLL_Satisfiable(hkb4));
+        System.out.println("Since the horn clause problem isn't satisfiable with ~horned added, but is without it, we conclude that the unicorn is horned\n");
+
+
+        System.out.println("LIARS & TRUTH-TELLERS (a):");
         System.out.print("Is the liars and truth-tellers problem satisfiable? ");
         printBool(liarsSat);
+        System.out.print("Is the liars and truth-tellers problem with Amy added satisfiable? ");
+        LiarsTruthTellersKB lkb2 = new LiarsTruthTellersKB();
+        lkb2.addSymbol(lkb2.Amy, true);
+        printBool(DPLL_Satisfiable(lkb2));
+        System.out.println("Since liars & truth-tellers isn't satisfiable with Amy, but is without it, we conclude Amy is a liar\n");
+
+        System.out.print("Is the liars and truth-tellers problem with Bob added satisfiable? ");
+        LiarsTruthTellersKB lkb3 = new LiarsTruthTellersKB();
+        lkb3.addSymbol(lkb3.Bob, true);
+        printBool(DPLL_Satisfiable(lkb3));
+        System.out.println("Since liars & truth-tellers isn't satisfiable with Bob, but is without it, we conclude Bob is a liar\n");
+
+        System.out.print("Is the liars and truth-tellers problem with ~Cal added satisfiable? ");
+        LiarsTruthTellersKB lkb4 = new LiarsTruthTellersKB();
+        lkb4.addSymbol(lkb4.Cal, false);
+        printBool(DPLL_Satisfiable(lkb4));
+        System.out.println("Since liars & truth-tellers isn't satisfiable with ~Cal, but is without it, we conclude Cal is a truth-teller\n");
+
 
 
     }
