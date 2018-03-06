@@ -6,23 +6,23 @@ public class LiarsTruthTellersKB extends KB{
     public Symbol Amy;
     public Symbol Bob;
     public Symbol Cal;
-    //public Symbol A;
-    //public Symbol B;
-    //public Symbol C;
 
-    public LiarsTruthTellersKB() {
+    public LiarsTruthTellersKB(int part) {
         super();
         Amy = intern("Amy");
         Bob = intern("Bob");
         Cal = intern("Cal");
 
-        add(new Biconditional(Amy, new Conjunction(Amy,Cal)));
-        add(new Biconditional(Bob, new Negation(Cal)));
-        add(new Biconditional(Cal, new Disjunction(Bob, new Negation(Amy))));
-
-//        add(new Biconditional(Amy,new Negation(Cal)));
-//        add(new Biconditional(Bob,new Conjunction(Amy,Cal)));
-//        add(new Biconditional(Cal,Bob));
+        if(part ==1){
+            add(new Biconditional(Amy, new Conjunction(Amy,Cal)));
+            add(new Biconditional(Bob, new Negation(Cal)));
+            add(new Biconditional(Cal, new Disjunction(Bob, new Negation(Amy))));
+        }
+        else{
+            add(new Biconditional(Amy,new Negation(Cal)));
+            add(new Biconditional(Bob,new Conjunction(Amy,Cal)));
+            add(new Biconditional(Cal,Bob));
+        }
     }
 }
 
