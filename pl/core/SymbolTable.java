@@ -22,6 +22,16 @@ public class SymbolTable {
 		}
 		return sym;
 	}
+
+//
+//	public SymbolTable (SymbolTable s) {
+//		Map<String,Symbol> oldMap = s.symbols;
+//		for (String key : oldMap.keySet()) {
+//			symbols.put(key, oldMap.get(key));
+//		}
+//	}
+//
+//	public void SymbolTable() {}
 	
 	/**
 	 * Return the number of Symbols stored in this SymbolTable.
@@ -36,6 +46,10 @@ public class SymbolTable {
 	 */
 	public Collection<Symbol> symbols() {
 		return symbols.values();
+	}
+
+	public void remove(String s) {
+		symbols.remove(s);
 	}
 	
 }

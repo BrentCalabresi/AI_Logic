@@ -20,6 +20,8 @@ public class GenModel implements Model{
         for (Symbol s : w.getAssertions().keySet())
             this.assertions.put(s,w.getAssertions().get(s));
 
+
+
         kb = w.getKb();
     }
 
@@ -35,7 +37,7 @@ public class GenModel implements Model{
 
     public void addSymbol(Symbol s, boolean b){
         if (assertions.containsValue(s)){
-            System.out.println("Object is already in model");
+            //System.out.println("Object is already in model");
         }
         else{
             assertions.put(s,b);
@@ -97,12 +99,12 @@ public class GenModel implements Model{
         return newModel;
     }
 
-
     public GenModel union(Symbol symbol, boolean b) {
         GenModel m = new GenModel(this);//this.duplicate();
-        m.addSymbol(symbol,b);
-        System.out.println("adding: "+symbol);
+        m.addSymbol(symbol, b);
+        //System.out.println("adding: " + symbol);
         return m;
     }
+
 
 }

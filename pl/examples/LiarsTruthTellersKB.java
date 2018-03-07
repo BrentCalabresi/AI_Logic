@@ -23,6 +23,11 @@ public class LiarsTruthTellersKB extends KB{
             add(new Biconditional(Bob,new Conjunction(Amy,Cal)));
             add(new Biconditional(Cal,Bob));
         }
+
+    }
+
+    public LiarsTruthTellersKB() {
+        this(1);
     }
 }
 

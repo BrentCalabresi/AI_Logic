@@ -24,4 +24,6 @@ public class HornClauseKB extends KB{
             add(new Implication(new Disjunction(immortal,mammal),horned));
         }
 
+
+
 }

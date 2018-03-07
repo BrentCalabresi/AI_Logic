@@ -31,4 +31,8 @@ public class WumpusWorldKB extends KB {
 		new WumpusWorldKB().dump();
 	}
 
+	public void addP12() {
+		add(p12);
+	}
+
 }
