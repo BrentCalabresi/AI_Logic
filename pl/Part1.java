@@ -7,6 +7,7 @@ import pl.core.Symbol;
 import pl.examples.*;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -33,19 +34,54 @@ public class Part1 {
         Negation notHorned = new Negation(unicorns.horned);
 
         LiarsTruthTellersKB liars = new LiarsTruthTellersKB();
+        LiarsTruthTellersKB liarsB = new LiarsTruthTellersKB(2);
         Symbol amy = liars.Amy;
         Symbol bob = liars.Bob;
         Symbol cal = liars.Cal;
 
         System.out.println("----- Part 1 -----");
-        System.out.println("Does the KB entail the proposition \"There is a pit in 1,2\": "+Entails(kb1, p12));
+        System.out.println("MODUS PONENS:");
         System.out.println("Does the KB entail the proposition \"If P && Q, then P implies Q\": "+Entails(MPKB, q));
+        System.out.println("\nWUMPUS WORLD:");
+        System.out.println("Does the KB entail the proposition \"There is a pit in 1,2\": "+Entails(kb1, p12));
+        System.out.println("\nHORN CLAUSES:");
         System.out.println("Does the KB entail the proposition \"mythical?\": "+Entails(unicorns,mythical));
         System.out.println("Does the KB entail the proposition \"magical?\": "+Entails(unicorns,magical));
         System.out.println("Does the KB entail the proposition \"horned?\": "+Entails(unicorns,horned));
+        System.out.println("\nLIARS AND TRUTH-TELLERS (a):");
         System.out.println("Does the KB entail the proposition \"Amy?\": "+Entails(liars,amy));
         System.out.println("Does the KB entail the proposition \"Bob?\": "+Entails(liars,bob));
         System.out.println("Does the KB entail the proposition \"Cal?\": "+Entails(liars,cal));
+        amy = liarsB.Amy;
+        bob = liarsB.Bob;
+        cal = liarsB.Cal;
+        System.out.println("\nLIARS AND TRUTH-TELLERS (b):");
+        System.out.println("Does the KB entail the proposition \"Amy?\": " + Entails(liarsB, amy));
+        System.out.println("Does the KB entail the proposition \"Bob?\": " + Entails(liarsB, bob));
+        System.out.println("Does the KB entail the proposition \"Cal?\": " + Entails(liarsB, cal));
+
+        System.out.println("\nMORE LIARS:");
+        MoreLiarsKB mlkb = new MoreLiarsKB();
+        LinkedList<Symbol> liarsList = new LinkedList<>();
+        LinkedList<Symbol> possibleTruthTellers = new LinkedList<>();
+        for (Symbol l : mlkb.getSymbols()) {
+            MoreLiarsKB newmlkb = new MoreLiarsKB();
+            if (Entails(newmlkb, new Negation(l))) liarsList.add(l);
+            else possibleTruthTellers.add(l);
+        }
+
+        LinkedList<Symbol> truthTellers = new LinkedList<>();
+        LinkedList<Symbol> undecidable = new LinkedList<>();
+        for (Symbol s : possibleTruthTellers) {
+            MoreLiarsKB newmlkb = new MoreLiarsKB();
+            if (Entails(newmlkb, s)) truthTellers.add(s);
+            else undecidable.add(s);
+
+        }
+
+        System.out.println("The KB entails the negation of: " + liarsList + " (ie, these are liars)");
+        System.out.println("The KB entails the following: " + truthTellers + " (ie, these are truth-tellers)");
+        System.out.println("\n\n");
     }
 
 

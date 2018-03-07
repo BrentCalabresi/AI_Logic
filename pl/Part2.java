@@ -5,10 +5,7 @@ import pl.cnf.CNFConverter;
 import pl.cnf.Literal;
 import pl.core.*;
 import pl.cnf.Clause;
-import pl.examples.HornClauseKB;
-import pl.examples.LiarsTruthTellersKB;
-import pl.examples.ModusPonensKB;
-import pl.examples.WumpusWorldKB;
+import pl.examples.*;
 
 import java.util.*;
 
@@ -20,12 +17,14 @@ public class Part2 {
         ModusPonensKB mkb = new ModusPonensKB();
         WumpusWorldKB wkb = new WumpusWorldKB();
         HornClauseKB hkb = new HornClauseKB();
+        MoreLiarsKB mlkb = new MoreLiarsKB();
 
         System.out.println("----- Part 2 -----");
         boolean modusSat = DPLL_Satisfiable(mkb);
         boolean wumpusSat = DPLL_Satisfiable(wkb);
         boolean hornSat = DPLL_Satisfiable(hkb);
         boolean liarsSat = DPLL_Satisfiable(new LiarsTruthTellersKB());
+        boolean moreSat = DPLL_Satisfiable(mlkb);
 
         System.out.println("MODUS PONENS:");
         System.out.print("Is modus ponens satisfiable? ");
@@ -70,6 +69,7 @@ public class Part2 {
         System.out.println("Since the horn clause problem isn't satisfiable with ~horned added, but is without it, we conclude that the unicorn is horned\n");
 
 
+
         System.out.println("LIARS & TRUTH-TELLERS (a):");
         System.out.print("Is the liars and truth-tellers problem satisfiable? ");
         printBool(liarsSat);
@@ -90,6 +90,60 @@ public class Part2 {
         lkb4.addSymbol(lkb4.Cal, false);
         printBool(DPLL_Satisfiable(lkb4));
         System.out.println("Since liars & truth-tellers isn't satisfiable with ~Cal, but is without it, we conclude Cal is a truth-teller\n");
+
+
+        System.out.println("LIARS & TRUTH-TELLERS (b):");
+        System.out.print("Is this liars & truth-tellers problem satisfiable? ");
+        LiarsTruthTellersKB lkbb = new LiarsTruthTellersKB(2);
+        printBool(DPLL_Satisfiable(lkbb));
+        System.out.print("Is this liars & truth-tellers problem with Amy added satisfiable? ");
+        LiarsTruthTellersKB lkbb2 = new LiarsTruthTellersKB();
+        lkbb2.addSymbol(lkbb2.Amy, true);
+        printBool(DPLL_Satisfiable(lkbb2));
+        System.out.println("Since liars & truth-tellers isn't satisfiable with Amy, but is without it, we conclude Amy is a liar\n");
+
+        System.out.print("Is the liars and truth-tellers problem with Bob added satisfiable? ");
+        LiarsTruthTellersKB lkbb3 = new LiarsTruthTellersKB();
+        lkbb3.addSymbol(lkbb3.Bob, true);
+        printBool(DPLL_Satisfiable(lkbb3));
+        System.out.println("Since liars & truth-tellers isn't satisfiable with Bob, but is without it, we conclude Bob is a liar\n");
+
+        System.out.print("Is the liars and truth-tellers problem with ~Cal added satisfiable? ");
+        LiarsTruthTellersKB lkbb4 = new LiarsTruthTellersKB();
+        lkbb4.addSymbol(lkbb4.Cal, false);
+        printBool(DPLL_Satisfiable(lkbb4));
+        System.out.println("Since liars & truth-tellers isn't satisfiable with ~Cal, but is without it, we conclude Cal is a truth-teller\n");
+
+        System.out.println("MORE LIARS:");
+        System.out.print("Is more liars satisfiable? ");
+
+        printBool(moreSat);
+
+        System.out.println("Who's a liar and who's a truth-teller? (this can take a minute...)");
+        // lol this code is trash but it works so ¯\_(ツ)_/¯
+        LinkedList<Symbol> liars = new LinkedList<>();
+        LinkedList<Symbol> possibleTruthTellers = new LinkedList<>();
+        for (Symbol l : mlkb.getSymbols()) {
+            MoreLiarsKB newmlkb = new MoreLiarsKB();
+            newmlkb.addSymbol(l, true);
+            if (!DPLL_Satisfiable(newmlkb)) liars.add(l);
+            else possibleTruthTellers.add(l);
+        }
+
+        LinkedList<Symbol> truthTellers = new LinkedList<>();
+        LinkedList<Symbol> undecidable = new LinkedList<>();
+        for (Symbol s : possibleTruthTellers) {
+            MoreLiarsKB newmlkb = new MoreLiarsKB();
+            newmlkb.addSymbol(s, false);
+            if (!DPLL_Satisfiable(newmlkb)) truthTellers.add(s);
+            else undecidable.add(s);
+
+        }
+
+        System.out.println("liars: " + liars);
+        System.out.println("truth-tellers: " + truthTellers);
+        System.out.println("We know this because we added, for example, Amy to the model and found that it was unsatisfiable, " +
+                "meaning that Amy must be a liar (same for the other liars). \nTruth-tellers was done similarly, but with ~Jay and ~Kay.");
 
 
 

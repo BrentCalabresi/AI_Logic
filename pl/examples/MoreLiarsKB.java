@@ -2,6 +2,8 @@ package pl.examples;
 
 import pl.core.*;
 
+import java.util.LinkedList;
+
 public class MoreLiarsKB extends KB {
     public Symbol Amy;
     public Symbol Bob;
@@ -44,6 +46,23 @@ public class MoreLiarsKB extends KB {
         add(new Biconditional(Jay, new Conjunction(new Negation(Amy), new Negation(Cal))));
         add(new Biconditional(Kay, new Conjunction(new Negation(Dee), new Negation(Fay))));
         add(new Biconditional(Lee, new Conjunction(new Negation(Bob), new Negation(Jay))));
+    }
+
+    public LinkedList<Symbol> getSymbols() {
+        LinkedList<Symbol> l = new LinkedList<>();
+        l.add(Amy);
+        l.add(Bob);
+        l.add(Cal);
+        l.add(Dee);
+        l.add(Eli);
+        l.add(Fay);
+        l.add(Gil);
+        l.add(Hal);
+        l.add(Ida);
+        l.add(Jay);
+        l.add(Kay);
+        l.add(Lee);
+        return l;
     }
 }
 

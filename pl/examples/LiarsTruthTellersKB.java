@@ -24,5 +24,9 @@ public class LiarsTruthTellersKB extends KB{
             add(new Biconditional(Cal,Bob));
         }
     }
+
+    public LiarsTruthTellersKB() {
+        this(1);
+    }
 }
 
